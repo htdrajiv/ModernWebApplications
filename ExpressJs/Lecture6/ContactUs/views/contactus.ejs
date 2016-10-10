@@ -1,0 +1,35 @@
+HI<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <%if(errors) { for(var i=0;i<errors.length;i++){ %>
+        <h4 style="color:red;"><%= errors[i].msg%></h4>
+    <% } } %>
+
+    <form name="contactUsFrm" action="/contactus/saveMessage" method="POST">
+        <table>
+            </tr>
+                <td>Full Name</td>
+                <td><input type="text" name="fullName"/></td>
+            </tr>
+            </tr>
+                <td>Message</td>
+                <td><textarea rows="4" cols="50" name="message" placeholder="type your message here..."></textarea></td>
+                <td>
+                    <input type="radio" name="msgType" value="suggestion"/> suggestion <br>
+                    <input type="radio" name="msgType" value="complain"/> complain <br>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" />
+            </tr>
+            
+        </table>
+    </form>
+  </body>
+</html>

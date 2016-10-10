@@ -1,5 +1,5 @@
 var fs = require("fs");
-var fileName = "/MUM/ModernWebApplications/ExpressJs/Lecture5/Inventors/InventorsApp/data/inventorsData.json";
+var fileName = "./data/inventorsData.json";
 
 var inventorsInfo = (res)=>{
     var readStream = fs.createReadStream(fileName); 
