@@ -22,7 +22,7 @@ app.enable("strict routing");
 
 // proxy setup
 app.set('trust proxy',true);
-app.set("x-forwarded-for","127.0.0.1")
+// app.set("x-forwarded-for","127.0.0.1")
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
