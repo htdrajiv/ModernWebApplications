@@ -1,0 +1,110 @@
+--  import restaurants json data to mongodb lab8 database restaurants collection
+    mongoimport.exe -d lab8 -c restaurants restaurants.json;
+
+--  use lab8;
+
+1.  Write a mongodb query to display all the documents in the collection restaurants;
+--  db.restaurants.find().pretty();
+
+2.  Write a mongodb query to display fields restaurant_id, name, district and cuisine for all the documents in the 
+collection restaurants.
+--  var projection = {'restaurant_id':1,'name':1,'cuisine':1,'borough':1};
+    db.restaurants.find({},projection).pretty();
+
+3.  Write a mongodb query to display fields restaurant_id,name,district and cuisine, but exclude the field _id for all the
+documents in the collection restaurant.
+--  var projection = {'restaurant_id':1,'name':1,'cuisine':1,'borough':1,'_id':0};
+    db.restaurants.find({},projection).pretty();
+
+4.  write a mongodb query to display the fields restaurant_id, name, district and zipcode but exclude the _id field for all 
+the documents in the collection restaurants.
+--  var projection = {'restaurant_id':1,'name':1,'borough':1,'address.zipcode':1,'_id':0};
+    db.restaurants.find({},projection).pretty();
+
+5.  Write a mongodb query to display all the restaurant which is in the district Bronx.
+--  db.restaurants.find({"borough": "Bronx"}).pretty();
+
+6.  Write a mongodb query to display the first 5 restaurant which is in district Bronx.
+--  db.restaurants.find({"borough": "Bronx"},{}).limit(5).pretty();
+
+7.  Write a mongodb query to display the next 5 restaurants after skipping first 5 which are in the district Bronx.
+--  db.restaurants.find({"borough": "Bronx"}).skip(5).limit(5).pretty();
+
+8.  Write a mongodb query to find the restaurants which locates in latitude value less than -95.754168.
+--  var query = {'address.coord.0':{'$lt':-73.856077}};
+    db.restaurants.find(query).pretty();
+
+9.  Write a mongodb query to find the restaurants that does not prepare any cuisine of 'American' and their grade score 
+more than 70 and latitude less than -65.754168
+--  var query = {'cuisine':{'$ne':'American'},'grades.score':{'$gt':70},'address.coord.0':{'$lt':-65.754168}}
+    db.restaurants.find(query).limit(1).pretty()
+
+10. Write a mongoDb query to find the restaurant_id,name,district and cuisine for those restaurants which contains 'Wil'
+as first three letters for its name.
+--  var projection = {'restaurant_id':1,'name':1,'borough':1,'cuisine':1};
+    var query = {'name':/^Wil/};
+    db.restaurants.find(query,projection).pretty();
+
+11. Write a mongoDb query to find the restaurant_id,name,district and cuisine for those restaurants which contains 'ces' 
+as last three letters for its name.
+--  var projection = {'restaurant_id':1,'name':1,'borough':1,'cuisine':1};
+    var query = {'name':/ces$/};
+    db.restaurants.find(query,projection).pretty();
+
+12. Write a mongoDb query to find the restaurant_id,name,district and cuisine for those restaurants which contains 'Reg' 
+as last three letters somewhere in its name.
+--  var projection = {'restaurant_id':1,'name':1,'borough':1,'cuisine':1};
+    var query = {'name':/Reg/};
+    db.restaurants.find(query,projection).pretty();
+
+13. Write a mongoDb query to find the restaurants which belongs to the district Bronx and prepared either American or 
+Chinese dish.
+--  var query = {'borough':'Bronx','cuisine':{'$in':['American ','Chinese']}};
+    db.restaurants.find(query,projection).pretty();
+
+14. Write a mongoDb query to find the restaurant id, name, district and cuisine for those restaurants which belongs to 
+the district Staten Island or Queens or Bronoxor Brooklyn.
+--  var projection = {'restaurant_id':1,'name':1,'borough':1,'cuisine':1};
+    var query = {'borough':{'$in':['Staten Island','Queens','Bronoxor Brooklyn']}};
+    db.restaurants.find(query,projection).pretty();
+
+15. Write a mongoDb query to find the restaurant id, name, district and cuisine for those restaurants which are not 
+belonging to the district Staten Island or Queens or Bronoxor Brooklyn.
+--  var projection = {'restaurant_id':1,'name':1,'borough':1,'cuisine':1};
+    var query = {'borough':{'$nin':['Staten Island','Queens','Bronoxor Brooklyn']}};
+    db.restaurants.find(query,projection).pretty();
+
+16. Write a mongoDb query to find the restaurant id, name, district and cuisine for those restaurants who achieved a 
+score which is not more than 10.
+--  var projection = {'restaurant_id':1,'name':1,'borough':1,'cuisine':1};
+    var query = {'grades.score':{'$lt':10}};
+    db.restaurants.find(query,projection).pretty();
+
+17. Write a mongoDb query to find the restaurant id, name, district and cuisine for those restaurants where 2nd element 
+of coord array contains a value which is more than 42 and up to 52.
+--  var projection = {'restaurant_id':1,'name':1,'borough':1,'cuisine':1};
+    var query = {'address.coord.1':{'$gt':42,'$lt':52}};
+    db.restaurants.find(query,projection).pretty();
+
+18. Write a mongoDb query to arrange the name of the restaurants in ascending order along with all the columns.
+--  db.restaurants.find().sort({'name':1}).pretty();
+
+19. Write a mongoDb query to arrange the name of the restaurants in descending order along with all the columns.
+--  db.restaurants.find().sort({'name':-1}).pretty();
+
+20. Write a mongoDb query to arrange the name of the cuisine in ascending order and for those same cuisine district 
+should be in descending order.
+--  db.restaurants.find().sort({'cuisine':1,'borough':-1}).pretty();
+
+21. Write a mongoDb query to know whether all the addresses contains the street or not.
+--  db.restaurants.count({'address.street':{'$exists':true}});
+
+22. Write a mongoDb query which will select all the documents in the restaurants collection where the coord field 
+value is Double.
+--  db.restaurants.find({'address.coord':{'$type':'double'}}).pretty();
+
+23. Write a mongoDb query to find the restaurant name, district, longitude and latitude and cuisine for those restaurants
+which contains 'Mad' as first three letters of its name.
+--  var projection = {'name':1,'borough':1,'address':1,'cuisine':1};
+    var query = {'name':/^Mad/};
+    db.restaurants.find(query,projection).pretty();
