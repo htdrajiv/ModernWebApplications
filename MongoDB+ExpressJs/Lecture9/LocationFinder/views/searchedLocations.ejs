@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Locations</p>
+    <table>
+    <tr>
+        <td><b>Name</b></td>
+        <td><b>Category</b></td> 
+        <td><b>Latitude</b></td>
+        <td><b>Longitude</b></td> 
+    </tr>
+    <% for(var i=0; i < searchedLocations.length; i++) { %>
+        <tr>
+            <td><%= searchedLocations[i].first %></td>
+            <td><%= searchedLocations[i].last %></td>
+            <td><%= searchedLocations[i].geometry.coordinates[0] %></td>
+            <td><%= searchedLocations[i].geometry.coordinates[1] %></td>
+        </tr>
+    <% } %>
+</table>
+  </body>
+</html>

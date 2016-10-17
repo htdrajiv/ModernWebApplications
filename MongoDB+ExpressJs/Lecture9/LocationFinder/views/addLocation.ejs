@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/css/jquery-gmaps-latlon-picker.css"/>
+    <script type="text/javascript" src="/javascripts/js/jquery-gmaps-latlon-picker.js"></script>    
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/css/jquery-gmaps-latlon-picker.css"/>
+    <script>
+        $.gMapsLatLonPickerNoAutoInit = 1;
+    </script>
+    <script src="/javascripts/js/jquery-gmaps-latlon-picker.js"></script>
+    <script>
+        $(document).ready(function() {            
+            var getCurrLocation = navigator.geolocation.getCurrentPosition((position)=>{
+                var paramObj = {}                
+                $('.gllpLatitude').val(position.coords.latitude);
+                $('.gllpLongitude').val(position.coords.longitude);
+                $('.gllpZoom').val(15);
+                $('#findLocations').attr('href','/findNearestLocations?latitude='+position.coords.latitude+"&longitude="+position.coords.longitude);
+                setDefaultProperties(paramObj);                
+            });            
+        });
+        
+    </script>
+    <script>
+    // Copy the init code from "jquery-gmaps-latlon-picker.js" and extend it here
+    function setDefaultProperties(paramObj){
+        $(".gllpLatlonPicker").each(function() {
+            $obj = $(document).gMapsLatLonPicker();
+
+            $obj.params.strings.markerText = "Drag this Marker (example edit)";
+            $obj.params.mapOptions.mapTypeId = google.maps.MapTypeId.SATELLITE;
+
+            $obj.params.displayError = function(message) {
+                console.log("MAPS ERROR: " + message); // instead of alert()
+            };
+            $obj.init( $(this) );
+        });
+    }
+    </script>
+
+
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Add new location</p>
+    <%if(errors) { for(var i=0;i<errors.length;i++){ %>
+        <h4 style="color:red;"><%= errors[i].msg%></h4>
+    <% } } %>
+
+    <form name="addLocations" action="/addLocation/save" method="POST">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="name"/></td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td><input type="text" name="category" ></input></td>
+            </tr>            
+            <tr>
+                <td><input type="submit" />
+            </tr>             
+        </table> 
+        <fieldset class="gllpLatlonPicker">
+            <input type="text" class="gllpSearchField">
+            <input type="button" class="gllpSearchButton" value="search">
+            <div class="gllpMap">Google Maps</div>
+            Latitude: <input type="text" name="latitude" class="gllpLatitude" />
+            Longitude: <input type="text" name="longitude" class="gllpLongitude" />
+            <input type="text" class="gllpZoom" />
+            <input type="button" class="gllpUpdateButton" value="update map">
+        </fieldset>       
+    </form>
+    <div></div>
+    <a id="findLocations">Show Nearest 3 locations</a>
+  </body>
+</html>
