@@ -1,0 +1,23 @@
+<h1>{{title}}</h1>
+<h2>My Products</h2>
+<ul class="heroes">
+  <li *ngFor="let prod of products"
+      [class.selected]="prod === selectedProduct"
+      (click)="onSelect(prod)">
+    <span class="badge">{{prod.id}}</span> {{prod.name}}
+    <button class="delete"
+            (click)="delete(prod); $event.stopPropagation()">x</button>
+  </li>
+</ul>
+<div *ngIf="selectedProduct">
+  <h2>
+    {{selectedProduct.name | uppercase}} is my hero
+  </h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>
+<div>
+  <label>Product name:</label> <input #productName />
+  <button (click)="add(productName.value); productName.value=''">
+    Add
+  </button>
+</div>
